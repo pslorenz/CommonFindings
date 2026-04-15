@@ -46,9 +46,9 @@ reg add "HKLM\SYSTEM\CurrentControlSet\Services\NTDS\Diagnostics" /v "16 LDAP In
 ```
 
 **Step 2: Watch the Directory Service event log for these IDs:**
-- **Event ID 2887** — Aggregate count, every 24h, of unsigned/cleartext binds. Tells you scope.
-- **Event ID 2889** — One per individual bind without signing. Includes client IP and bind DN. **This is your offender list.**
-- **Event ID 3039** — Channel binding tokens not provided (for LDAPS).
+- **Event ID 2887** - Aggregate count, every 24h, of unsigned/cleartext binds. Tells you scope.
+- **Event ID 2889** - One per individual bind without signing. Includes client IP and bind DN. **This is your offender list.**
+- **Event ID 3039** - Channel binding tokens not provided (for LDAPS).
 
 PowerShell to collect 2889s:
 ```powershell
@@ -59,7 +59,7 @@ Get-WinEvent -LogName 'Directory Service' -FilterXPath "*[System[EventID=2889]]"
 
 **Step 3: Run for at least 1–2 weeks** to capture monthly batch jobs, quarterly reports, etc.
 
-**Step 4: Remediate offenders one by one** — either reconfigure them to use LDAPS or to bind with signing (SASL with sign-and-seal).
+**Step 4: Remediate offenders one by one** either reconfigure them to use LDAPS or to bind with signing (SASL with sign-and-seal).
 
 ## Remediation
 
