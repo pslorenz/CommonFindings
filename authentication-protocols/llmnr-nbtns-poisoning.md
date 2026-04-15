@@ -38,7 +38,7 @@ sudo responder -I eth0 -A
 
 LLMNR/NBT-NS being used legitimately is rare in modern environments, but it does happen with old line-of-business apps that hardcode short names.
 
-- Run `responder -A` for a few hours during business hours and review the captured queries. Any query that resolves to a real internal hostname when you look it up in DNS is fine to ignore (DNS will handle it). Queries for typos or names that don't exist in DNS are also fine — those would have failed anyway.
+- Run `responder -A` for a few hours during business hours and review the captured queries. Any query that resolves to a real internal hostname when you look it up in DNS is fine to ignore (DNS will handle it). Queries for typos or names that don't exist in DNS are also fine as those would have failed anyway.
 - Genuine concern: queries for short hostnames that *do* successfully resolve via NBT-NS today but have no DNS record. Those workflows will break. Add the missing DNS records first.
 
 ## Remediation
