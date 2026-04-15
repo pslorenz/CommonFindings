@@ -6,7 +6,7 @@
 
 ## What it is
 
-Windows ships with IPv6 enabled and prefers it over IPv4 when both are available. In most enterprise networks, IPv6 is enabled on hosts but unused — there is no DHCPv6 server, no router advertisements, no IPv6 DNS. An attacker on the local subnet runs `mitm6`, which acts as a rogue DHCPv6 server, hands out the attacker's address as the DNS server, and now sees and modifies every DNS lookup the victim makes — paving the way for WPAD attacks, NTLM relay, and credential capture.
+Windows ships with IPv6 enabled and prefers it over IPv4 when both are available. In most enterprise networks, IPv6 is enabled on hosts but largely unused; there is no DHCPv6 server, no router advertisements, no IPv6 DNS. An attacker on the local subnet runs `mitm6`, which acts as a rogue DHCPv6 server, hands out the attacker's address as the DNS server, and now sees and modifies every DNS lookup the victim makes paving the way for WPAD attacks, NTLM relay, and credential capture.
 
 ## What attack it enables
 
