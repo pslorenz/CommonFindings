@@ -31,48 +31,48 @@ findings/
 ## Finding index
 
 ### Authentication protocols
-- [LLMNR / NBT-NS poisoning](findings/authentication-protocols/llmnr-nbtns-poisoning.md)
-- [NTLMv1 still allowed](findings/authentication-protocols/ntlmv1-enabled.md)
+- [LLMNR / NBT-NS poisoning](authentication-protocols/llmnr-nbtns-poisoning.md)
+- [NTLMv1 still allowed](authentication-protocols/ntlmv1-enabled.md)
 
 ### Network services
-- [LDAP signing not enforced](findings/network-services/ldap-signing-not-enforced.md)
-- [SMB signing not required](findings/network-services/smb-signing-not-required.md)
-- [SMBv1 enabled](findings/network-services/smbv1-enabled.md)
-- [WPAD spoofing](findings/network-services/wpad-spoofing.md)
-- [IPv6 / mitm6](findings/network-services/ipv6-mitm6.md)
-- [RDP exposed or weakly configured](findings/network-services/rdp-exposed-or-weak.md)
-- [Anonymous AD enumeration (LDAP / SAMR / Pre-Win2K)](findings/network-services/anonymous-ldap-samr-enumeration.md)
+- [LDAP signing not enforced](network-services/ldap-signing-not-enforced.md)
+- [SMB signing not required](network-services/smb-signing-not-required.md)
+- [SMBv1 enabled](network-services/smbv1-enabled.md)
+- [WPAD spoofing](network-services/wpad-spoofing.md)
+- [IPv6 / mitm6](network-services/ipv6-mitm6.md)
+- [RDP exposed or weakly configured](network-services/rdp-exposed-or-weak.md)
+- [Anonymous AD enumeration (LDAP / SAMR / Pre-Win2K)](network-services/anonymous-ldap-samr-enumeration.md)
 
 ### Kerberos
-- [Kerberoasting (weak service account passwords)](findings/kerberos/kerberoasting.md)
-- [AS-REP roasting (DONT_REQUIRE_PREAUTH)](findings/kerberos/asreproasting.md)
-- [Unconstrained delegation](findings/kerberos/unconstrained-delegation.md)
+- [Kerberoasting (weak service account passwords)](kerberos/kerberoasting.md)
+- [AS-REP roasting (DONT_REQUIRE_PREAUTH)](kerberos/asreproasting.md)
+- [Unconstrained delegation](kerberos/unconstrained-delegation.md)
 
 ### Active Directory Certificate Services
-- [ESC1 — Misconfigured certificate templates](findings/adcs/esc1-misconfigured-templates.md)
-- [ESC8 — NTLM relay to AD CS HTTP endpoints](findings/adcs/esc8-ntlm-relay-to-adcs.md)
+- [ESC1 — Misconfigured certificate templates](adcs/esc1-misconfigured-templates.md)
+- [ESC8 — NTLM relay to AD CS HTTP endpoints](adcs/esc8-ntlm-relay-to-adcs.md)
 
 ### Privileged access
-- [Domain Admins logging into workstations](findings/privileged-access/domain-admins-on-workstations.md)
-- [Protected Users group not used](findings/privileged-access/protected-users-not-used.md)
-- [AD ACL misconfigurations (BloodHound paths)](findings/privileged-access/ad-acl-misconfigurations.md)
-- [Dangerous built-in groups over-populated](findings/privileged-access/dangerous-builtin-groups.md)
-- [Entra Connect server treated as member server](findings/privileged-access/entra-connect-is-tier0.md)
+- [Domain Admins logging into workstations](privileged-access/domain-admins-on-workstations.md)
+- [Protected Users group not used](privileged-access/protected-users-not-used.md)
+- [AD ACL misconfigurations (BloodHound paths)](privileged-access/ad-acl-misconfigurations.md)
+- [Dangerous built-in groups over-populated](privileged-access/dangerous-builtin-groups.md)
+- [Entra Connect server treated as member server](privileged-access/entra-connect-is-tier0.md)
 
 ### Accounts and policies
-- [krbtgt password not rotated](findings/accounts-policies/krbtgt-not-rotated.md)
-- [MachineAccountQuota = 10 (default)](findings/accounts-policies/machine-account-quota.md)
-- [LAPS not deployed](findings/accounts-policies/laps-not-deployed.md)
-- [GPP cpassword in SYSVOL](findings/accounts-policies/gpp-cpassword.md)
-- [Weak account lockout / password spray exposure](findings/accounts-policies/weak-account-lockout-and-spray.md)
-- [Stale accounts and password hygiene](findings/accounts-policies/stale-accounts-password-hygiene.md)
+- [krbtgt password not rotated](accounts-policies/krbtgt-not-rotated.md)
+- [MachineAccountQuota = 10 (default)](accounts-policies/machine-account-quota.md)
+- [LAPS not deployed](accounts-policies/laps-not-deployed.md)
+- [GPP cpassword in SYSVOL](accounts-policies/gpp-cpassword.md)
+- [Weak account lockout / password spray exposure](accounts-policies/weak-account-lockout-and-spray.md)
+- [Stale accounts and password hygiene](accounts-policies/stale-accounts-password-hygiene.md)
 
 ### Detection and logging
-- [Insufficient audit policy and logging](findings/detection-and-logging/insufficient-audit-policy.md)
-- [No honey accounts / honey SPNs deployed](findings/detection-and-logging/honey-accounts-and-spns.md)
+- [Insufficient audit policy and logging](detection-and-logging/insufficient-audit-policy.md)
+- [No honey accounts / honey SPNs deployed](detection-and-logging/honey-accounts-and-spns.md)
 
 ### Legacy
-- [Print Spooler running on Domain Controllers](legacy/print-spooler-on-dc.md)
+- [Print Spooler running on Domain Controllers](Legacy/print-spooler-on-dc.md)
 
 ## How to use this repo
 
