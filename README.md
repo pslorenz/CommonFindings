@@ -72,7 +72,7 @@ findings/
 - [No honey accounts / honey SPNs deployed](findings/detection-and-logging/honey-accounts-and-spns.md)
 
 ### Legacy
-- [Print Spooler running on Domain Controllers](findings/legacy/print-spooler-on-dc.md)
+- [Print Spooler running on Domain Controllers](legacy/print-spooler-on-dc.md)
 
 ## How to use this repo
 
