@@ -6,7 +6,7 @@
 
 ## What it is
 
-SMB version 1, designed in the 1980s, has well-known unauthenticated remote code execution vulnerabilities — most famously EternalBlue (MS17-010), which fueled WannaCry and NotPetya. Microsoft has marked SMBv1 deprecated and removed it from default installs since Windows 10 1709 / Server 2019, but it persists on upgraded systems and on appliances.
+SMB version 1, designed in the 1980s, has well-known unauthenticated remote code execution vulnerabilities, most famously EternalBlue (MS17-010), which fueled WannaCry and NotPetya. Microsoft has marked SMBv1 deprecated and removed it from default installs since Windows 10 1709 / Server 2019, but it persists on upgraded systems and on appliances.
 
 ## What attack it enables
 
