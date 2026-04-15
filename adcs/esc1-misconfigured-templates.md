@@ -6,7 +6,7 @@
 
 ## What it is
 
-If an AD CS certificate template allows the requester to specify the Subject (or Subject Alternative Name), allows client authentication EKU, and is enrollable by low-privileged users — then any user can request a certificate with `userPrincipalName=Administrator@example.local`, receive a valid cert, and authenticate as that user.
+If an AD CS certificate template allows the requester to specify the Subject (or Subject Alternative Name), allows client authentication EKU, and is enrollable by low-privileged users then any user can request a certificate with `userPrincipalName=Administrator@example.local`, receive a valid cert, and authenticate as that user.
 
 This is "ESC1" in the SpecterOps AD CS attack taxonomy. ESC1 through ESC11+ are different misconfigurations of the same product. ESC1 is the most common.
 
@@ -82,7 +82,7 @@ Re-enable the template option you changed. Re-issue from the CA. Effective immed
 
 ## Validate the fix
 
-Re-run `certipy find -vulnerable` — affected templates should no longer appear in the vulnerable list.
+Re-run `certipy find -vulnerable` affected templates should no longer appear in the vulnerable list.
 
 Attempt the attack as a low-priv user:
 ```bash
@@ -92,7 +92,7 @@ certipy req -u lowpriv@example.local -p Pass -ca <ca-name> -template <template> 
 
 ## References
 
-- SpecterOps: [Certified Pre-Owned](https://posts.specterops.io/certified-pre-owned-d95910965cd2) — the original ESC1-ESC8 paper
+- SpecterOps: [Certified Pre-Owned](https://posts.specterops.io/certified-pre-owned-d95910965cd2) - the original ESC1-ESC8 paper
 - Microsoft: [KB5014754 — Certificate-based authentication changes on Windows DCs](https://support.microsoft.com/en-us/topic/kb5014754-certificate-based-authentication-changes-on-windows-domain-controllers-ad2c23b0-15d8-4340-a468-4d4f3b188f16)
 - Certipy: https://github.com/ly4k/Certipy
 - MITRE ATT&CK: T1649
