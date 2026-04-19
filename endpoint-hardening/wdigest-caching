@@ -1,0 +1,101 @@
+# WDigest Plaintext Credential Caching
+
+**Category:** Endpoint Hardening
+**Operational Risk of Remediation:** Very Low
+**Attacker Skill Required to Exploit:** Trivial (mimikatz shows plaintext passwords)
+
+## What it is
+
+WDigest is a legacy HTTP authentication protocol from the Windows XP / Server 2003 era. When enabled, LSASS caches the user's **plaintext password** in memory. Not just the hash, the actual password. An attacker who dumps LSASS doesn't even need to crack anything; the password is right there in cleartext.
+
+Microsoft disabled WDigest plaintext caching by default starting with Windows 8.1 and Server 2012 R2 (via KB2871997). However, the registry key that controls it (`UseLogonCredential`) can be re-enabled and on systems **upgraded** from Windows 7/8 or Server 2008R2/2012, the default may still be the old permissive value.
+
+This is a one-registry-key fix with essentially zero breakage risk. There is no reason for this to be enabled in any modern environment.
+
+## What attack it enables (without the fix)
+
+`mimikatz sekurlsa::wdigest` shows plaintext passwords for every user who has logged in since last reboot. No cracking, no rainbow tables, no GPU farm. Just the password in the output.
+
+MITRE ATT&CK: T1003.001
+
+## How to confirm it's present
+
+```powershell
+Get-ItemProperty 'HKLM:\SYSTEM\CurrentControlSet\Control\SecurityProviders\WDigest' -Name UseLogonCredential -ErrorAction SilentlyContinue
+# If absent on Win8.1+/2012R2+: caching is OFF (good — but set it explicitly to 0 for defense in depth)
+# If 1: caching is ON (bad)
+# If 0: caching is explicitly OFF (good)
+```
+
+At scale:
+```powershell
+$hosts = Get-ADComputer -Filter { Enabled -eq $true } | Select-Object -ExpandProperty Name
+foreach ($h in $hosts) {
+    try {
+        Invoke-Command -ComputerName $h -ScriptBlock {
+            $val = (Get-ItemProperty 'HKLM:\SYSTEM\CurrentControlSet\Control\SecurityProviders\WDigest' -Name UseLogonCredential -ErrorAction SilentlyContinue).UseLogonCredential
+            [PSCustomObject]@{ Host = $env:COMPUTERNAME; UseLogonCredential = $val }
+        } -ErrorAction Stop
+    } catch {}
+}
+```
+
+Any host returning `1` is vulnerable. Any host where the key doesn't exist is *probably* fine but should be set explicitly to `0` because an attacker with local admin can create the key and set it to `1`, then wait for the next login.
+
+## What to audit before remediation
+
+Almost nothing. WDigest plaintext caching is not used by any modern application. The only edge case:
+
+- Some extremely old IIS applications configured for Digest authentication against a local account store (not AD). These are vanishingly rare and should have been migrated years ago.
+
+If your environment is running Windows 8.1+ / Server 2012 R2+ (and it should be), no audit period is needed.
+
+## Remediation
+
+**Via GPO (preferred):**
+```
+Computer Configuration → Preferences → Windows Settings → Registry
+Path: HKLM\SYSTEM\CurrentControlSet\Control\SecurityProviders\WDigest
+Value name: UseLogonCredential
+Value type: REG_DWORD
+Value data: 0
+```
+
+**Via PowerShell (single host):**
+```powershell
+Set-ItemProperty 'HKLM:\SYSTEM\CurrentControlSet\Control\SecurityProviders\WDigest' -Name UseLogonCredential -Value 0 -Type DWord
+# No reboot required — takes effect at next logon
+```
+
+**Via PowerShell (create the key if it doesn't exist):**
+```powershell
+$path = 'HKLM:\SYSTEM\CurrentControlSet\Control\SecurityProviders\WDigest'
+if (-not (Test-Path $path)) { New-Item -Path $path -Force }
+New-ItemProperty -Path $path -Name UseLogonCredential -Value 0 -PropertyType DWord -Force
+```
+
+## What might break
+
+Nothing in practice. If you find something that breaks, it's something that should have been migrated off WDigest authentication years ago.
+
+## Rollback
+
+```powershell
+Set-ItemProperty 'HKLM:\SYSTEM\CurrentControlSet\Control\SecurityProviders\WDigest' -Name UseLogonCredential -Value 1
+```
+Effective at next logon.
+
+## Validate the fix
+
+```powershell
+(Get-ItemProperty 'HKLM:\SYSTEM\CurrentControlSet\Control\SecurityProviders\WDigest').UseLogonCredential
+# Should be 0
+```
+
+Attacker-side (lab only): after setting to 0 and logging in as a test user, run `mimikatz sekurlsa::wdigest`. The password field should show `(null)` instead of the plaintext password.
+
+## References
+
+- Microsoft: [KB2871997 — Update to improve credentials protection](https://support.microsoft.com/en-us/topic/microsoft-security-advisory-update-to-improve-credentials-protection-and-management-may-13-2014-93434251-04ac-b7f3-52aa-9f951c14b649)
+- Microsoft: [WDigest authentication](https://learn.microsoft.com/en-us/windows-server/security/credentials-protection-and-management/configuring-additional-lsa-protection)
+- MITRE ATT&CK: T1003.001
